@@ -1,0 +1,260 @@
+{
+  "settings": {
+    "accent": "#7c5cff",
+    "siteTitle": "Chinmay Kambali | Software Engineer · AI & ML",
+    "metaDescription": "Portfolio of Chinmay Kambali: final-year Computer Science student building multi-agent AI systems, RAG pipelines and full-stack web apps."
+  },
+  "profile": {
+    "name": "Chinmay Kambali",
+    "title": "Software Engineer · AI & Machine Learning",
+    "tagline": "I build production AI systems and full-stack products: multi-agent LLM pipelines, RAG retrieval and payment-ready web apps that real users rely on.",
+    "about": "I'm a final-year Computer Science Engineering student at Presidency University, Bengaluru (CGPA 8.7). Across two internships (7 months) I've helped build production AI systems, including an agentic document-generation pipeline that Cloudside Technologies adopted as the foundation of their SOW system, and a RAG-based retrieval system at The KP.\n\nMy work spans ML engineering, LLM orchestration and full-stack development: multi-agent systems with Google ADK and Gemini, retrieval pipelines grounded in real data, classic ML for fraud detection, and FastAPI + PostgreSQL apps deployed on Vercel, Render and GCP. I'm looking for Software Engineer roles where I can keep shipping things people use.",
+    "photo": "",
+    "location": "Bengaluru, India",
+    "availability": "Open to Software Engineer roles",
+    "email": "chinmaykambali2004@gmail.com",
+    "phone": "",
+    "resume": "uploads/Chinmay_Kambali_Resume.pdf",
+    "github": "https://github.com/ChinmayKambali",
+    "linkedin": "https://www.linkedin.com/in/chinmaykambali/",
+    "twitter": "",
+    "leetcode": "",
+    "website": ""
+  },
+  "skills": [
+    {
+      "id": "sk-ai",
+      "group": "AI & Machine Learning",
+      "items": ["Large Language Models (LLMs)", "Retrieval-Augmented Generation (RAG)", "Multi-Agent Systems", "Google ADK", "Gemini API", "Prompt Engineering", "Natural Language Processing (NLP)", "Information Retrieval", "Isolation Forest", "XGBoost", "SMOTE", "Statistical Analysis"]
+    },
+    {
+      "id": "sk-lang",
+      "group": "Languages",
+      "items": ["Python", "Java", "JavaScript", "SQL", "HTML/CSS"]
+    },
+    {
+      "id": "sk-fw",
+      "group": "Frameworks & Libraries",
+      "items": ["FastAPI", "REST APIs", "Celery", "Pandas", "NumPy", "Scikit-learn"]
+    },
+    {
+      "id": "sk-db",
+      "group": "Databases",
+      "items": ["PostgreSQL", "pgvector", "MySQL", "MongoDB"]
+    },
+    {
+      "id": "sk-cloud",
+      "group": "Cloud, DevOps & Tools",
+      "items": ["Google Cloud Platform (GCP)", "Docker", "Vercel", "Render", "Git", "GitHub", "Razorpay", "Resend"]
+    },
+    {
+      "id": "sk-ways",
+      "group": "Methodologies",
+      "items": ["Agile", "Scrum"]
+    }
+  ],
+  "projects": [
+    {
+      "id": "pr-contractguard",
+      "title": "ContractGuard: Contract Risk Analyser for MSMEs",
+      "category": "AI / ML",
+      "summary": "Multi-agent AI system that reviews MSME contracts clause by clause and flags legal risks, with fixes grounded in Indian law.",
+      "description": "Led development of ContractGuard, a multi-agent AI system that analyses MSME contracts to identify clause-level legal risks and recommend actionable fixes.\n\nUpload a contract (PDF or DOCX) and 6 parallel domain-specialist agents review it, flagging unfair payment terms, penalty traps, IP grabs and one-sided liability. A RAG pipeline compares each clause against 400+ benchmark clauses and grounds findings in relevant Indian laws; every finding comes with a statutory reference, an estimated financial exposure and a recommended fix.",
+      "tech": ["FastAPI", "Google Gemini", "Multi-Agent", "RAG", "PostgreSQL + pgvector", "Celery", "Redis", "React"],
+      "image": "",
+      "liveUrl": "https://contractguard-9tt3.onrender.com/",
+      "repoUrl": "https://github.com/ChinmayKambali/MSME-Contract-Analyzer",
+      "date": "2026-10",
+      "featured": true
+    },
+    {
+      "id": "pr-cupcakes",
+      "title": "Cupcakes & Crumbs Co.",
+      "category": "Full-Stack Web",
+      "summary": "Full-stack bakery ordering platform with Razorpay payments, order emails and an admin panel. Processed 38 live orders.",
+      "description": "Independently built a full-stack ordering platform for a home bakery: a live menu, cart and checkout with Razorpay payments (amounts computed on the server so prices can't be tampered with), automated itemised order emails via Resend, and an admin panel with pending orders and sales analytics.\n\nDeployed on Vercel (frontend) and Render (backend + database). Resolved real production issues including email deliverability (DKIM/SPF), Render free-tier cold starts and database lifecycle limits, and processed 38 live orders before the client paused operations.",
+      "tech": ["FastAPI", "PostgreSQL", "Vanilla JS", "Razorpay", "Resend", "Vercel", "Render"],
+      "image": "",
+      "liveUrl": "https://cupcakesandcrumbsco.vercel.app",
+      "repoUrl": "https://github.com/ChinmayKambali/cupcakesandcrumbsco",
+      "date": "2026-01",
+      "featured": true
+    },
+    {
+      "id": "pr-fraud",
+      "title": "Multi-Stage ML Pipeline for Fraud Job Detection",
+      "category": "AI / ML",
+      "summary": "Chained anomaly detection, regression and classification to catch fake job postings: ~0.97 ROC-AUC and 80% fraud recall.",
+      "description": "Designed a multi-stage fraud-detection pipeline in which each stage feeds engineered signals into the next: Isolation Forest for anomaly detection, Random Forest Regression for salary-expectation modelling, and XGBoost + SMOTE for final classification.\n\nAnomaly flags, salary deviation and raw job attributes are fused into XGBoost, combining unsupervised, regression and supervised signals in a single decision. Achieved ~0.97 ROC-AUC and 80% fraud recall on 18,000+ heavily imbalanced job postings.",
+      "tech": ["Python", "Scikit-learn", "Isolation Forest", "Random Forest", "XGBoost", "SMOTE", "Pandas"],
+      "image": "",
+      "liveUrl": "",
+      "repoUrl": "",
+      "date": "2025-07",
+      "featured": true
+    },
+    {
+      "id": "pr-plc",
+      "title": "Home Automation with Arduino as a Basic PLC",
+      "category": "IoT / Embedded",
+      "summary": "An Arduino Uno running a PLC-style scan loop: motion-activated lighting, a temperature-coded RGB status LED and buzzer alerts.",
+      "description": "Every cycle the Arduino scans its inputs (PIR motion, DHT11 temperature and humidity, a push button) and drives outputs from fixed logic rules, the same input → logic → output loop an industrial PLC runs. Readings are logged over Serial.",
+      "tech": ["Arduino Uno", "C++", "DHT11", "PIR Sensor", "Embedded"],
+      "image": "",
+      "liveUrl": "",
+      "repoUrl": "https://github.com/ChinmayKambali/Home_Automation_Using_Arduino_As_a_Basic_PLC",
+      "date": "",
+      "featured": false
+    },
+    {
+      "id": "pr-forestfire",
+      "title": "Forest Fire Detection with Raspberry Pi",
+      "category": "IoT / Embedded",
+      "summary": "Raspberry Pi temperature and humidity monitor with a live I²C LCD display: the sensing base for a forest-fire early-warning node.",
+      "description": "Reads temperature and humidity from a DHT11 every two seconds, shows live readings on a 16×2 I²C LCD and logs them, retrying failed sensor reads without crashing. Rising temperature with falling humidity is the classic early sign of fire risk.",
+      "tech": ["Raspberry Pi", "Python", "DHT11", "I²C LCD", "IoT"],
+      "image": "",
+      "liveUrl": "",
+      "repoUrl": "https://github.com/ChinmayKambali/Forest_Fire_Detection_Using_RaspberryPi",
+      "date": "",
+      "featured": false
+    },
+    {
+      "id": "pr-guessing",
+      "title": "Guessing Game Master",
+      "category": "Java",
+      "summary": "Console number-guessing game with three difficulty levels, progressive hints and a reverse mode where the computer guesses.",
+      "description": "Player mode offers Easy, Moderate and Hard difficulties, with hints (even/odd, upper/lower half, prime) that unlock as you miss. In Game Master mode the computer guesses your number without ever repeating a guess, tracked with a HashSet.",
+      "tech": ["Java", "Collections"],
+      "image": "",
+      "liveUrl": "",
+      "repoUrl": "https://github.com/ChinmayKambali/Guessing_Game_Master",
+      "date": "",
+      "featured": false
+    }
+  ],
+  "experience": [
+    {
+      "id": "ex-cloudside",
+      "role": "Machine Learning Intern: SOW & Project Plan Generator",
+      "company": "Cloudside Technologies Pvt. Ltd.",
+      "companyUrl": "",
+      "type": "Internship",
+      "location": "Bengaluru, Karnataka",
+      "start": "2025-06",
+      "end": "2025-08",
+      "current": false,
+      "summary": "",
+      "highlights": [
+        "Independently built a multi-agent AI pipeline (Google ADK, Gemini API) that converts client requirements into ready-to-send SOWs and Project Plans in Cloudside's enterprise template, now the foundation of their production SOW generation system.",
+        "Architected the orchestrator layer that routes generation to specialised SOW / Project-Plan sub-agents via externalised prompt templates and GCP-defaulted assumptions, letting non-technical staff tune behaviour without code changes."
+      ],
+      "tech": ["Google ADK", "Gemini API", "Multi-Agent Systems", "Prompt Engineering", "GCP", "Python"]
+    },
+    {
+      "id": "ex-thekp",
+      "role": "Machine Learning Intern: Web Search Augmented Query Resolution",
+      "company": "The KP",
+      "companyUrl": "",
+      "type": "Internship",
+      "location": "Bengaluru, Karnataka",
+      "start": "2025-01",
+      "end": "2025-04",
+      "current": false,
+      "summary": "",
+      "highlights": [
+        "Owned the JSON structuring layer on a 3-person team, transforming raw multi-source scraped content into organised, machine-readable context for a history/geography AI retrieval pipeline.",
+        "Designed the prompt-engineering strategy that grounds Gemini's responses in retrieved data to minimise hallucination, mirroring production RAG architecture and reducing reliance on parametric memory."
+      ],
+      "tech": ["RAG", "Gemini API", "Information Retrieval", "Prompt Engineering", "Python"]
+    }
+  ],
+  "education": [
+    {
+      "id": "ed-presidency",
+      "institution": "Presidency University",
+      "degree": "B.Tech",
+      "field": "Computer Science Engineering",
+      "location": "Bengaluru, Karnataka",
+      "start": "",
+      "end": "Expected June 2027",
+      "grade": "CGPA 8.7",
+      "highlights": []
+    },
+    {
+      "id": "ed-ryan",
+      "institution": "Ryan International School",
+      "degree": "CBSE (Class XII)",
+      "field": "",
+      "location": "Bengaluru, Karnataka",
+      "start": "",
+      "end": "2023-03",
+      "grade": "86%",
+      "highlights": []
+    },
+    {
+      "id": "ed-stpauls",
+      "institution": "St. Paul's English School",
+      "degree": "ICSE (Class X)",
+      "field": "",
+      "location": "Bengaluru, Karnataka",
+      "start": "",
+      "end": "2021-03",
+      "grade": "93%",
+      "highlights": []
+    }
+  ],
+  "certifications": [
+    {
+      "id": "ce-ibm",
+      "name": "Python for Data Science, AI & Development",
+      "issuer": "IBM (Coursera)",
+      "date": "2025-01",
+      "credentialId": "70SH76DOCZP2",
+      "url": "https://coursera.org/verify/70SH76DOCZP2",
+      "file": "uploads/cert-ibm-python.pdf"
+    },
+    {
+      "id": "ce-jpm",
+      "name": "Software Engineering Job Simulation",
+      "issuer": "J.P. Morgan Chase & Co. (Forage)",
+      "date": "2024-08",
+      "credentialId": "",
+      "url": "",
+      "file": "uploads/cert-jpmorgan.pdf"
+    },
+    {
+      "id": "ce-ea",
+      "name": "Software Engineering Job Simulation",
+      "issuer": "Electronic Arts (Forage)",
+      "date": "2024-08",
+      "credentialId": "",
+      "url": "",
+      "file": "uploads/cert-electronic-arts.pdf"
+    }
+  ],
+  "achievements": [
+    {
+      "id": "ac-orders",
+      "title": "Shipped a live product with real customers",
+      "date": "2026-01",
+      "description": "Cupcakes & Crumbs Co. processed 38 real paid orders through Razorpay before the client paused operations.",
+      "url": "https://cupcakesandcrumbsco.vercel.app"
+    },
+    {
+      "id": "ac-cloudside",
+      "title": "Internship work adopted in production",
+      "date": "2025-08",
+      "description": "The multi-agent SOW generator I built at Cloudside Technologies became the foundation of their production SOW generation system.",
+      "url": ""
+    },
+    {
+      "id": "ac-dsa",
+      "title": "Consistent DSA practice on LeetCode & NeetCode",
+      "date": "",
+      "description": "I solve data-structures and algorithms problems regularly and keep every accepted submission on GitHub.",
+      "url": "https://github.com/ChinmayKambali/LeetCode-Submissions"
+    }
+  ],
+  "testimonials": []
+}

@@ -1,0 +1,7 @@
+# Private originals (copies used on the site live in docs/uploads)
+Chin Documents/
+# Local manager backups
+manager/backups/
+*.tmp
+node_modules/
+.claude/

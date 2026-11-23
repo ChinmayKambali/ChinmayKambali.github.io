@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio Manager</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c5cff'/%3E%3Ctext x='50%25' y='56%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-weight='700' font-size='34' fill='white'%3E✎%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="manager.css">
+</head>
+<body>
+  <header class="top">
+    <div class="top-left">
+      <span class="logo">✎</span>
+      <div>
+        <div class="app-name">Portfolio Manager</div>
+        <div class="app-sub" id="statusText">Loading…</div>
+      </div>
+    </div>
+    <div class="top-actions">
+      <a class="btn ghost" href="/preview/" target="_blank" rel="noopener" title="See your site with the changes you've saved">👁 Preview</a>
+      <a class="btn ghost" id="liveLink" href="#" target="_blank" rel="noopener" hidden>🌐 Live site</a>
+      <button class="btn primary" id="publishBtn">⬆ Publish</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="side">
+      <div class="side-label">Categories</div>
+      <nav id="catNav"></nav>
+      <div class="side-foot">
+        <p><b>How it works</b></p>
+        <ol>
+          <li>Pick a category.</li>
+          <li>Add or edit an entry and hit <b>Save</b>.</li>
+          <li>Check it with <b>Preview</b>.</li>
+          <li>Hit <b>Publish</b> to put it live (takes ~1 minute).</li>
+        </ol>
+      </div>
+    </aside>
+    <main class="main" id="view"></main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <dialog id="dialog">
+    <form method="dialog" class="dlg">
+      <h3 id="dlgTitle"></h3>
+      <div id="dlgBody"></div>
+      <div class="dlg-actions" id="dlgActions"></div>
+    </form>
+  </dialog>
+
+  <script src="manager.js"></script>
+</body>
+</html>
