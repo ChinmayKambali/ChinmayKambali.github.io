@@ -6,7 +6,7 @@
   },
   "profile": {
     "name": "Chinmay Kambali",
-    "title": "AI & Machine Learning · Full-Stack Development",
+    "title": "AI & Machine Learning · Software Development Engineer",
     "tagline": "I build production AI systems and full-stack products: multi-agent LLM pipelines, RAG retrieval and payment-ready web apps that real users rely on.",
     "about": "I'm a final-year Computer Science Engineering student at Presidency University, Bengaluru (CGPA 8.7). Across two internships (7 months) I've helped build production AI systems, including an agentic document-generation pipeline that Cloudside Technologies adopted as the foundation of their SOW system, and a RAG-based retrieval system at The KP.\n\nMy work spans ML engineering, LLM orchestration and full-stack development: multi-agent systems with Google ADK and Gemini, retrieval pipelines grounded in real data, classic ML for fraud detection, and FastAPI + PostgreSQL apps deployed on Vercel, Render and GCP. I'm looking for roles where I can keep building AI and software that people actually use.",
     "photo": "",
@@ -18,7 +18,7 @@
     "github": "https://github.com/ChinmayKambali",
     "linkedin": "https://www.linkedin.com/in/chinmaykambali/",
     "twitter": "",
-    "leetcode": "",
+    "leetcode": "https://leetcode.com/u/Chinmay_Kambali/",
     "website": ""
   },
   "skills": [
@@ -120,27 +120,6 @@
       "featured": true
     },
     {
-      "id": "pr-cupcakes",
-      "title": "Cupcakes & Crumbs Co.",
-      "category": "Full-Stack Web",
-      "summary": "Full-stack bakery ordering platform with Razorpay payments, order emails and an admin panel. Processed 38 live orders.",
-      "description": "Independently built a full-stack ordering platform for a home bakery: a live menu, cart and checkout with Razorpay payments (amounts computed on the server so prices can't be tampered with), automated itemised order emails via Resend, and an admin panel with pending orders and sales analytics.\n\nDeployed on Vercel (frontend) and Render (backend + database). Resolved real production issues including email deliverability (DKIM/SPF), Render free-tier cold starts and database lifecycle limits, and processed 38 live orders before the client paused operations.",
-      "tech": [
-        "FastAPI",
-        "PostgreSQL",
-        "Vanilla JS",
-        "Razorpay",
-        "Resend",
-        "Vercel",
-        "Render"
-      ],
-      "image": "",
-      "liveUrl": "",
-      "repoUrl": "https://github.com/ChinmayKambali/cupcakesandcrumbsco",
-      "date": "2026-01",
-      "featured": true
-    },
-    {
       "id": "pr-fraud",
       "title": "Multi-Stage ML Pipeline for Fraud Job Detection",
       "category": "AI / ML",
@@ -159,6 +138,27 @@
       "liveUrl": "",
       "repoUrl": "",
       "date": "2025-07",
+      "featured": true
+    },
+    {
+      "id": "pr-cupcakes",
+      "title": "Cupcakes & Crumbs Co.",
+      "category": "Full-Stack Web",
+      "summary": "Full-stack bakery ordering platform with Razorpay payments, order emails and an admin panel. Processed 38 live orders.",
+      "description": "Independently built a full-stack ordering platform for a home bakery: a live menu, cart and checkout with Razorpay payments (amounts computed on the server so prices can't be tampered with), automated itemised order emails via Resend, and an admin panel with pending orders and sales analytics.\n\nDeployed on Vercel (frontend) and Render (backend + database). Resolved real production issues including email deliverability (DKIM/SPF), Render free-tier cold starts and database lifecycle limits, and processed 38 live orders before the client paused operations.",
+      "tech": [
+        "FastAPI",
+        "PostgreSQL",
+        "Vanilla JS",
+        "Razorpay",
+        "Resend",
+        "Vercel",
+        "Render"
+      ],
+      "image": "",
+      "liveUrl": "",
+      "repoUrl": "https://github.com/ChinmayKambali/cupcakesandcrumbsco",
+      "date": "2026-01",
       "featured": true
     },
     {
