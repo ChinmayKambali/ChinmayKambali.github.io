@@ -128,3 +128,14 @@ dialog::backdrop { background: rgba(10, 10, 20, .5); }
   .top { padding: 10px 16px; flex-wrap: wrap; }
   .entry { flex-wrap: wrap; }
 }
+
+/* Step 1: edit existing or add new */
+.ask { font-weight: 700; font-size: 1.1rem; margin: 6px 0 14px; }
+.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.choice { display: grid; gap: 6px; justify-items: start; align-content: start; text-align: left; padding: 26px; border-radius: 16px; border: 1px solid var(--border); background: var(--panel); cursor: pointer; box-shadow: var(--shadow); transition: border-color .15s, transform .15s; }
+.choice:hover:not([disabled]) { border-color: var(--accent); transform: translateY(-2px); }
+.choice[disabled] { opacity: .5; cursor: not-allowed; box-shadow: none; }
+.choice-ico { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); font-size: 1.4rem; font-weight: 700; margin-bottom: 6px; }
+.choice-title { font-weight: 700; font-size: 1.1rem; }
+.choice-desc { color: var(--muted); font-size: .9rem; }
+@media (max-width: 600px) { .choices { grid-template-columns: 1fr; } }

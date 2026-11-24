@@ -20,7 +20,8 @@
   const uid = (k) => k.slice(0, 2) + '-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
   const assetUrl = (v) => !v ? '' : /^(https?:|data:)/i.test(v) ? v : '/preview/' + String(v).replace(/^\/+/, '');
 
-  let schema, data, current = 'profile', editing = null, dirty = false, siteUrl = '';
+  let schema, data, current = 'profile', mode = 'choose', editing = null, dirty = false, siteUrl = '';
+  const isEmpty = (v) => v == null || v === '' || (Array.isArray(v) && !v.length);
 
   // ---------- api ----------
   async function api(path, body) {
@@ -102,6 +103,7 @@
 
   // ---------- navigation ----------
   const cat = () => schema.categories.find((c) => c.key === current);
+  const singular = (c) => c.label.replace(/ & .*/, '').replace(/s$/, '').toLowerCase();
 
   function renderNav() {
     const nav = $('#catNav'); nav.innerHTML = '';
@@ -109,19 +111,55 @@
       const n = c.single ? null : (data[c.key] || []).length;
       nav.append(h('button', {
         class: 'cat' + (c.key === current ? ' active' : ''),
-        onclick: async () => { if (await confirmLeave()) { dirty = false; current = c.key; editing = null; render(); } }
+        onclick: async () => { if (await confirmLeave()) { dirty = false; current = c.key; mode = 'choose'; editing = null; render(); } }
       }, h('span', { class: 'ico' }, c.icon), c.label, n != null ? h('span', { class: 'count' }, String(n)) : null));
     });
+  }
+
+  // Where "Back" / "Cancel" goes from the current screen.
+  async function goBack() {
+    if (!(await confirmLeave())) return;
+    dirty = false;
+    if (mode === 'edit' && editing !== null && !cat().single) editing = null;
+    else { mode = 'choose'; editing = null; }
+    render();
   }
 
   function render() {
     window.scrollTo(0, 0);
     renderNav();
     const c = cat();
-    if (c.single) return renderForm(c, data[c.key] || {}, null);
+    if (mode === 'choose') return renderChoice(c);
+    if (c.single) return renderForm(c, data[c.key] || {}, null, { onlyEmpty: mode === 'add' });
+    if (mode === 'add') return renderForm(c, {}, -1);
     if (editing === null) return renderList(c);
-    const items = data[c.key] || [];
-    renderForm(c, editing === -1 ? {} : items[editing], editing);
+    renderForm(c, data[c.key][editing], editing);
+  }
+
+  // ---------- step 1: edit existing or add new? ----------
+  function renderChoice(c) {
+    const v = $('#view'); v.innerHTML = '';
+    v.append(h('div', { class: 'page-head' }, h('div', {}, h('h1', {}, c.icon + ' ' + c.label), h('p', {}, c.help))));
+    v.append(h('p', { class: 'ask' }, 'What would you like to do?'));
+
+    let editDesc, addDesc, editOff = false, addOff = false;
+    if (c.single) {
+      const filled = c.fields.filter((f) => !isEmpty((data[c.key] || {})[f.key])).length;
+      const empty = c.fields.length - filled;
+      editDesc = `Change what's already there (${filled} field${filled === 1 ? '' : 's'} filled in).`;
+      addDesc = empty ? `Fill in the ${empty} field${empty === 1 ? '' : 's'} that ${empty === 1 ? 'is' : 'are'} still empty.` : 'Everything is already filled in.';
+      addOff = !empty;
+    } else {
+      const n = (data[c.key] || []).length;
+      editDesc = n ? `Change, reorder or delete your ${n} existing ${n === 1 ? singular(c) : c.label.toLowerCase()}.` : 'Nothing to edit yet.';
+      editOff = !n;
+      addDesc = `Add a new ${singular(c)} to your portfolio.`;
+    }
+    const card = (icon, title, desc, off, go) => h('button', { class: 'choice', disabled: off, onclick: go },
+      h('span', { class: 'choice-ico' }, icon), h('span', { class: 'choice-title' }, title), h('span', { class: 'choice-desc' }, desc));
+    v.append(h('div', { class: 'choices' },
+      card('✎', c.single ? 'Edit current info' : `Edit existing ${c.label.toLowerCase()}`, editDesc, editOff, () => { mode = 'edit'; editing = null; render(); }),
+      card('+', c.single ? 'Add missing info' : `Add a new ${singular(c)}`, addDesc, addOff, () => { mode = 'add'; editing = null; render(); })));
   }
 
   // ---------- list view ----------
@@ -129,13 +167,10 @@
     const v = $('#view'); v.innerHTML = '';
     const items = data[c.key] = data[c.key] || [];
     v.append(h('div', { class: 'page-head' },
-      h('div', {}, h('h1', {}, c.icon + ' ' + c.label), h('p', {}, c.help)),
-      h('button', { class: 'btn primary', onclick: () => { editing = -1; render(); } }, '+ Add new')));
+      h('div', {}, h('div', { class: 'crumb' }, h('button', { onclick: goBack }, '← Back')),
+        h('h1', {}, `Edit ${c.label.toLowerCase()}`), h('p', {}, 'Click the one you want to change. Use ↑ ↓ to reorder or 🗑 to delete.'))));
 
-    if (!items.length) {
-      v.append(h('div', { class: 'empty' }, `Nothing here yet. Click “+ Add new” to add your first ${c.label.toLowerCase().replace(/s$/, '')}.`));
-      return;
-    }
+    if (!items.length) { mode = 'choose'; return renderChoice(c); }
     const list = h('div', { class: 'entries' });
     items.forEach((it, i) => {
       let sub = it[c.subtitleField];
@@ -160,27 +195,31 @@
               const ans = await dialog('Delete this entry?', `“${it[c.titleField] || 'Untitled'}” will be removed from your portfolio. (A backup of your data is kept in manager/backups.)`,
                 [{ label: 'Cancel', value: 'no' }, { label: 'Delete', value: 'yes', cls: 'danger solid' }]);
               if (ans !== 'yes') return;
-              items.splice(i, 1); await save('Deleted ✓'); renderList(c);
+              items.splice(i, 1); await save('Deleted ✓'); render();
             }
           }, '🗑'))));
     });
     v.append(list);
-    v.append(h('p', { style: 'color:var(--muted);font-size:.85rem;margin-top:14px' }, 'Use ↑ ↓ to change the order they appear on your site.'));
   }
 
   // ---------- form view ----------
-  function renderForm(c, item, index) {
+  function renderForm(c, item, index, opts = {}) {
     const v = $('#view'); v.innerHTML = '';
     const isNew = index === -1;
+    let title, sub;
     if (c.single) {
-      v.append(h('div', { class: 'page-head' }, h('div', {}, h('h1', {}, c.icon + ' ' + c.label), h('p', {}, c.help))));
+      title = opts.onlyEmpty ? `Add missing info: ${c.label}` : `Edit ${c.label}`;
+      sub = opts.onlyEmpty ? 'Only the fields that are still empty are shown. Fill in what you want and hit Add.' : 'Change anything below and hit Save.';
     } else {
-      v.append(h('div', { class: 'page-head' }, h('div', {},
-        h('div', { class: 'crumb' }, h('button', { onclick: async () => { if (await confirmLeave()) { dirty = false; editing = null; render(); } } }, '← ' + c.label)),
-        h('h1', {}, isNew ? `Add ${c.label.replace(/s$/, '').toLowerCase()}` : (item[c.titleField] || 'Edit')))));
+      title = isNew ? `Add a new ${singular(c)}` : `Edit: ${item[c.titleField] || 'untitled'}`;
+      sub = isNew ? 'Fill in the details below. Fields marked * are required.' : 'Change anything below and hit Save.';
     }
+    v.append(h('div', { class: 'page-head' }, h('div', {},
+      h('div', { class: 'crumb' }, h('button', { onclick: goBack }, '← Back')),
+      h('h1', {}, title), h('p', {}, sub))));
 
-    const controls = c.fields.map((f) => buildField(f, item[f.key], c));
+    const fields = opts.onlyEmpty ? c.fields.filter((f) => isEmpty(item[f.key])) : c.fields;
+    const controls = fields.map((f) => buildField(f, item[f.key], c));
     const form = h('form', { class: 'form', novalidate: true, oninput: () => (dirty = true), onchange: () => (dirty = true) },
       controls.map((x) => x.el));
 
@@ -194,8 +233,8 @@
         }
       }, '🗑 Delete'));
     }
-    if (!c.single) actions.append(h('button', { type: 'button', class: 'btn', onclick: async () => { if (await confirmLeave()) { dirty = false; editing = null; render(); } } }, 'Cancel'));
-    actions.append(h('button', { type: 'submit', class: 'btn primary' }, isNew ? '+ Add to portfolio' : '✓ Save'));
+    actions.append(h('button', { type: 'button', class: 'btn', onclick: goBack }, 'Cancel'));
+    actions.append(h('button', { type: 'submit', class: 'btn primary' }, isNew || opts.onlyEmpty ? '+ Add to portfolio' : '✓ Save'));
     form.append(actions);
 
     form.addEventListener('submit', async (e) => {
@@ -211,8 +250,9 @@
         if (c.single) data[c.key] = out;
         else if (isNew) data[c.key].unshift(out);
         else data[c.key][index] = out;
-        await save(isNew ? 'Added ✓  Click Publish when you want it live.' : undefined);
-        if (!c.single) { editing = null; render(); }
+        await save(isNew || opts.onlyEmpty ? 'Added ✓  Click Publish when you want it live.' : 'Saved ✓  Click Publish when you want it live.');
+        if (c.single || isNew) mode = 'choose';
+        editing = null; render();
       } catch (err) { toast('Save failed: ' + err.message, true); }
     });
     v.append(form);

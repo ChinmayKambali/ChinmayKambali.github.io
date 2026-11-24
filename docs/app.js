@@ -40,6 +40,8 @@
   function initials(name) {
     return String(name || '?').trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
   }
+  // Email links open a Gmail compose window (instead of the visitor's default mail app, e.g. Outlook).
+  const gmail = (email) => 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(String(email).trim());
   const ext = (url) => /^https?:/i.test(url) ? ' target="_blank" rel="noopener noreferrer"' : '';
 
   // ---------- icons ----------
@@ -73,7 +75,7 @@
       const u = safeUrl(p[k]);
       return u ? `<a href="${esc(u)}"${ext(u)} aria-label="${label}" title="${label}">${I[k === 'website' ? 'web' : k]}</a>` : '';
     }).join('');
-    if (has(p.email)) out += `<a href="mailto:${esc(p.email)}" aria-label="Email" title="Email">${I.mail}</a>`;
+    if (has(p.email)) out += `<a href="${esc(gmail(p.email))}" target="_blank" rel="noopener" aria-label="Email ${esc(p.email)}" title="Email ${esc(p.email)}">${I.mail}</a>`;
     return out ? `<div class="socials">${out}</div>` : '';
   }
 
@@ -108,10 +110,10 @@
     const photo = safeUrl(p.photo);
     const resume = safeUrl(p.resume);
     const hasProjects = list(d.projects).length > 0;
-    const contactHref = has(p.email) ? `mailto:${esc(p.email)}` : '#contact';
+    const contactLink = has(p.email) ? `href="${esc(gmail(p.email))}" target="_blank" rel="noopener"` : 'href="#contact"';
     return `
     <section class="hero" id="top">
-      <div class="container hero-grid">
+      <div class="container hero-grid${photo ? '' : ' no-photo'}">
         <div class="reveal">
           ${has(p.availability) ? `<div class="status"><span class="status-dot"></span>${esc(p.availability)}</div>` : ''}
           <h1>Hi, I'm <span class="grad">${first}</span>${rest ? ' ' + rest : ''}</h1>
@@ -120,17 +122,14 @@
           <div class="hero-cta">
             ${hasProjects ? `<a class="btn btn-primary" href="#projects">View my work ${I.arrow}</a>` : ''}
             ${resume ? `<a class="btn" href="${esc(resume)}" target="_blank" rel="noopener">${I.download} Resume</a>` : ''}
-            <a class="btn" href="${contactHref}">${I.mail} Contact</a>
+            <a class="btn" ${contactLink}>${I.mail} Contact</a>
           </div>
           <div class="hero-meta">
             ${has(p.location) ? `<span>${I.pin}${esc(p.location)}</span>` : ''}
             ${socialLinks(p)}
           </div>
         </div>
-        <div class="avatar-wrap reveal">
-          ${photo ? `<img class="avatar" src="${esc(photo)}" alt="Photo of ${esc(p.name)}">`
-                  : `<div class="avatar avatar-initials"><span>${esc(initials(p.name))}</span></div>`}
-        </div>
+        ${photo ? `<div class="avatar-wrap reveal"><img class="avatar" src="${esc(photo)}" alt="Photo of ${esc(p.name)}"></div>` : ''}
       </div>
     </section>`;
   };
@@ -336,7 +335,7 @@
         <h2>Let's build something together</h2>
         <p>${has(p.availability) ? esc(p.availability) + '. ' : ''}Have a role, project or idea in mind? I'd love to hear about it.</p>
         <div class="hero-cta">
-          ${has(p.email) ? `<a class="btn btn-primary" href="mailto:${esc(p.email)}">${I.mail} ${esc(p.email)}</a>` : ''}
+          ${has(p.email) ? `<a class="btn btn-primary" href="${esc(gmail(p.email))}" target="_blank" rel="noopener">${I.mail} ${esc(p.email)}</a>` : ''}
           ${has(p.phone) ? `<a class="btn" href="tel:${esc(String(p.phone).replace(/[^\d+]/g, ''))}">${I.phone} ${esc(p.phone)}</a>` : ''}
           ${resume ? `<a class="btn" href="${esc(resume)}" target="_blank" rel="noopener">${I.download} View resume</a>` : ''}
         </div>
