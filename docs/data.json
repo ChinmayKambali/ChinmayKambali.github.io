@@ -6,7 +6,7 @@
   },
   "profile": {
     "name": "Chinmay Kambali",
-    "title": "AI & Machine Learning · Software Development Engineer",
+    "title": "AI & Machine Learning Engineer · Software Development Engineer",
     "tagline": "I build production AI systems and full-stack products: multi-agent LLM pipelines, RAG retrieval and payment-ready web apps that real users rely on.",
     "about": "I'm a final-year Computer Science Engineering student at Presidency University, Bengaluru (CGPA 8.7). Across two internships (7 months) I've helped build production AI systems, including an agentic document-generation pipeline that Cloudside Technologies adopted as the foundation of their SOW system, and a RAG-based retrieval system at The KP.\n\nMy work spans ML engineering, LLM orchestration and full-stack development: multi-agent systems with Google ADK and Gemini, retrieval pipelines grounded in real data, classic ML for fraud detection, and FastAPI + PostgreSQL apps deployed on Vercel, Render and GCP. I'm looking for roles where I can keep building AI and software that people actually use.",
     "photo": "",
